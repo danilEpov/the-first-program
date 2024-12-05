@@ -1,0 +1,28 @@
+.mainpage {
+    font-family: Marker Felt, fantasy;
+    background-color: #f0f0f0;
+    background-image: url(https://wallpapercave.com/wp/wp3477365.jpg);
+    background-size: 100% auto;
+}
+
+.Content {
+    text-align: center;
+}
+
+.refs {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+}
+
+.refs>form>button {
+    background: rgba(39, 212, 9, 0.904);
+    color: white;
+    border: 0.5 px;
+    border-color: rgba(186, 183, 183, 0.795);
+    padding: 1rem 1.5rem;
+}
+
+.auto {
+    margin-left: 10px;
+}

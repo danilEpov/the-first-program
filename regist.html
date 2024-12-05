@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/regist.css">
+    <script>
+        async function submitForm(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            const response = await fetch('/regist', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+            const result = await response.json();
+            document.getElementById('result').innerText = ` ${result.message}`;
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Регистрация на сайте!</h1>
+    <div class="post">
+        <form onsubmit="submitForm(event)">
+            <label for="login">Логин :</label>
+            <input type="text" id="login" name="login" required>
+            <br>
+            <label for="password">Пароль :</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <button type="submit">Подтвердить</button>
+        </form>
+        <p id="result"></p>
+    </div>
+</body>
+
+</html>

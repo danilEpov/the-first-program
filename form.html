@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Форма отправки данных</title>
+    <!-- Здесь начинается скрипт -->
+    <script>
+        async function submitForm(event) {
+            // Предотвращаем стандартное поведение формы (перезагрузку страницы)
+            event.preventDefault();
+
+            // Получаем форму, которая вызвала это событие
+            const form = event.target;
+
+            // Создаем объект FormData для извлечения данных из формы
+            const formData = new FormData(form);
+
+            // Преобразуем FormData в обычный объект
+            const data = Object.fromEntries(formData.entries());
+
+            // Отправляем POST-запрос на сервер с данными в формате JSON
+            const response = await fetch('/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            // Получаем ответ от сервера в формате JSON
+            const result = await response.json();
+
+            // Отображаем результат на странице
+            document.getElementById('result').innerText = `Сообщение: ${result.message}, Имя: ${result.name}, Возраст: ${result.age}`;
+        }
+    </script>
+    <!-- Здесь заканчивается скрипт -->
+</head>
+<body>
+    <h1>Отправка данных</h1>
+    <!-- Форма с обработчиком события onsubmit -->
+    <form onsubmit="submitForm(event)">
+        <label for="name">Имя:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <label for="age">Возраст:</label>
+        <input type="number" id="age" name="age" required>
+        <br>
+        <button type="submit">Отправить</button>
+    </form>
+    <!-- Элемент для отображения результата -->
+    <p id="result"></p>
+</body>
+</html>

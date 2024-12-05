@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Авторизация</title>
+    <link rel="stylesheet" type="text/css" href="css/dandan.css">
+</head>
+
+<body>
+    <h1>Авторизация</h1>
+    <form id="authForm" onsubmit="submitForm(event)">
+        <label for="loginBox">Логин :</label>
+        <input type="text" id="loginBox" name="login" required>
+        <br>
+        <label for="passwordBox">Пароль :</label>
+        <input type="password" id="passwordBox" name="password" required>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+    <p id="message"></p>
+    <script>
+        async function submitForm(event) {
+            event.preventDefault();
+            const form = document.getElementById('authForm');
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            console.log('Отправка данных:', data);
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+            if (response.redirected) {
+                window.location.href = response.url;
+            } else {
+                const result = await response.json();
+                document.getElementById('message').innerText = result.message;
+            }
+        }
+    </script>
+</body>
+
+</html>
